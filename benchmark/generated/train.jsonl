@@ -1,0 +1,51 @@
+{"text": "Unknown work package ZZ-000 at offshore platform, 20%.", "truth": null, "discipline": "civil"}
+{"text": "Install pump 004 at Unit 2 completed, 100%.", "truth": "ROT-L6-004", "discipline": "rotating_equipment"}
+{"text": "Safety inspection 007 at Site completed, 50%.", "truth": "HSE-L6-007", "discipline": "hse"}
+{"text": "Erect vessel 010 at Unit 2 completed, 100%.", "truth": "STA-L6-010", "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 013 at Unit 2 completed, 50%.", "truth": "INS-L6-013", "discipline": "instrumentation"}
+{"text": "Erect line 016 at R03 completed, 100%.", "truth": "PIP-L6-016", "discipline": "piping"}
+{"text": "Install cable tray 019 at R03 completed, 50%.", "truth": "ELE-L6-019", "discipline": "electrical"}
+{"text": "Foundation 022 at Area A completed, 100%.", "truth": "CIV-L6-022", "discipline": "civil"}
+{"text": "Install pump 025 at Unit 2 completed, 50%.", "truth": "ROT-L6-025", "discipline": "rotating_equipment"}
+{"text": "Safety inspection 028 at Site completed, 100%.", "truth": "HSE-L6-028", "discipline": "hse"}
+{"text": "Unknown work package ZZ-010 at offshore platform, 20%.", "truth": null, "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 034 at Unit 2 completed, 100%.", "truth": "INS-L6-034", "discipline": "instrumentation"}
+{"text": "Erect line 037 at R03 completed, 50%.", "truth": "PIP-L6-037", "discipline": "piping"}
+{"text": "Install cable tray 040 at R03 completed, 100%.", "truth": "ELE-L6-040", "discipline": "electrical"}
+{"text": "Foundation 043 at Area A completed, 50%.", "truth": "CIV-L6-043", "discipline": "civil"}
+{"text": "Install pump 046 at Unit 2 completed, 100%.", "truth": "ROT-L6-046", "discipline": "rotating_equipment"}
+{"text": "Safety inspection 049 at Site completed, 50%.", "truth": "HSE-L6-049", "discipline": "hse"}
+{"text": "Erect vessel 052 at Unit 2 completed, 100%.", "truth": "STA-L6-052", "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 055 at Unit 2 completed, 50%.", "truth": "INS-L6-055", "discipline": "instrumentation"}
+{"text": "Install line 058 at R03 completed, 100%.", "truth": "PIP-L6-058", "discipline": "piping"}
+{"text": "Unknown work package ZZ-020 at offshore platform, 20%.", "truth": null, "discipline": "electrical"}
+{"text": "Foundation 064 at Area A completed, 100%.", "truth": "CIV-L6-064", "discipline": "civil"}
+{"text": "Install pump 067 at Unit 2 completed, 50%.", "truth": "ROT-L6-067", "discipline": "rotating_equipment"}
+{"text": "Safety inspection 070 at Site completed, 100%.", "truth": "HSE-L6-070", "discipline": "hse"}
+{"text": "Erect vessel 073 at Unit 2 completed, 50%.", "truth": "STA-L6-073", "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 076 at Unit 2 completed, 100%.", "truth": "INS-L6-076", "discipline": "instrumentation"}
+{"text": "Erect line 079 at R03 completed, 50%.", "truth": "PIP-L6-079", "discipline": "piping"}
+{"text": "Install cable tray 082 at rack 3 completed, 100%.", "truth": "ELE-L6-082", "discipline": "electrical"}
+{"text": "Foundation 085 at Area A completed, 50%.", "truth": "CIV-L6-085", "discipline": "civil"}
+{"text": "Install pump 088 at Unit 2 completed, 100%.", "truth": "ROT-L6-088", "discipline": "rotating_equipment"}
+{"text": "Unknown work package ZZ-030 at offshore platform, 20%.", "truth": null, "discipline": "hse"}
+{"text": "Install vessel 094 at Unit 2 completed, 100%.", "truth": "STA-L6-094", "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 097 at Unit 2 completed, 50%.", "truth": "INS-L6-097", "discipline": "instrumentation"}
+{"text": "Erect line 100 at rack 3 completed, 100%.", "truth": "PIP-L6-100", "discipline": "piping"}
+{"text": "Install cable tray 103 at R03 completed, 50%.", "truth": "ELE-L6-103", "discipline": "electrical"}
+{"text": "Foundation 106 at Area A completed, 100%.", "truth": "CIV-L6-106", "discipline": "civil"}
+{"text": "Install pump 109 at Unit 2 completed, 50%.", "truth": "ROT-L6-109", "discipline": "rotating_equipment"}
+{"text": "Safety inspection 112 at Site completed, 100%.", "truth": "HSE-L6-112", "discipline": "hse"}
+{"text": "Erect vessel 115 at Unit 2 completed, 50%.", "truth": "STA-L6-115", "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 118 at Unit 2 completed, 100%.", "truth": "INS-L6-118", "discipline": "instrumentation"}
+{"text": "Unknown work package ZZ-040 at offshore platform, 20%.", "truth": null, "discipline": "piping"}
+{"text": "Install cable tray 124 at R03 completed, 100%.", "truth": "ELE-L6-124", "discipline": "electrical"}
+{"text": "Foundation 127 at Area A completed, 50%.", "truth": "CIV-L6-127", "discipline": "civil"}
+{"text": "Install pump 130 at Unit 2 completed, 100%.", "truth": "ROT-L6-130", "discipline": "rotating_equipment"}
+{"text": "Safety inspection 133 at Site completed, 50%.", "truth": "HSE-L6-133", "discipline": "hse"}
+{"text": "Erect vessel 136 at Unit 2 completed, 100%.", "truth": "STA-L6-136", "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 139 at Unit 2 completed, 50%.", "truth": "INS-L6-139", "discipline": "instrumentation"}
+{"text": "Erect line 142 at R03 completed, 100%.", "truth": "PIP-L6-142", "discipline": "piping"}
+{"text": "Install cable tray 145 at R03 completed, 50%.", "truth": "ELE-L6-145", "discipline": "electrical"}
+{"text": "Foundation 148 at Area A completed, 100%.", "truth": "CIV-L6-148", "discipline": "civil"}
+{"text": "Unknown work package ZZ-050 at offshore platform, 20%.", "truth": null, "discipline": "rotating_equipment"}

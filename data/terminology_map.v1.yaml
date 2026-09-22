@@ -1,0 +1,18 @@
+version: v1
+source: OIL field lexicon
+mappings:
+  - field_term: spool
+    canonical_term: piping segment
+    discipline: piping
+  - field_term: install
+    canonical_term: erect
+    discipline: civil
+  - field_term: rack 3
+    canonical_term: R03
+    discipline: piping
+  - field_term: CT103
+    canonical_term: CT-103
+    discipline: rotating_equipment
+  - field_term: hydrotest
+    canonical_term: pressure test
+    discipline: piping

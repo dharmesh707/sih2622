@@ -1,0 +1,6 @@
+activity_code,description,wbs_path,level,discipline,location,planned_start,planned_finish,parent_activity,contractor,resource
+PIP-L6-047,Erect line XX102 spool,WBS/PIPING/R03,6,piping,R03,2026-09-10,2026-09-14,PIP-L5-010,Northstar,Pipe crew
+ROT-L6-103,Install pump CT-103,WBS/ROTATING/UNIT2,6,rotating_equipment,Unit 2,2026-09-11,2026-09-16,ROT-L5-022,MechWorks,Rotating crew
+ELE-L6-031,Install cable tray,WBS/ELECTRICAL/R03,6,electrical,R03,2026-09-12,2026-09-18,ELE-L5-008,VoltBuild,Electrical crew
+CIV-L6-012,Pour foundation,WBS/CIVIL/AREA-A,6,civil,Area A,2026-09-09,2026-09-12,CIV-L5-004,BuildRight,Civil crew
+INS-L6-021,Calibrate pressure transmitter,WBS/INSTRUMENTATION/UNIT2,6,instrumentation,Unit 2,2026-09-14,2026-09-19,INS-L5-007,ControlPro,Instrument crew

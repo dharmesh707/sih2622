@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0",
+  "model_type": "logistic_regression",
+  "validation_roc_auc": 1.0,
+  "training_rows": 800,
+  "validation_rows": 220
+}

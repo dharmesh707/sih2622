@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic
+networkx
+openpyxl
+httpx
+pytest
+python-multipart
+sentence-transformers

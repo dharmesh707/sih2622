@@ -1,0 +1,9 @@
+{"text": "Safety inspection 154 at Site completed, 100%.", "truth": "HSE-L6-154", "discipline": "hse"}
+{"text": "Erect vessel 157 at Unit 2 completed, 50%.", "truth": "STA-L6-157", "discipline": "static_equipment"}
+{"text": "Calibrate transmitter 160 at Unit 2 completed, 100%.", "truth": "INS-L6-160", "discipline": "instrumentation"}
+{"text": "Erect line 163 at R03 completed, 50%.", "truth": "PIP-L6-163", "discipline": "piping"}
+{"text": "Install cable tray 166 at R03 completed, 100%.", "truth": "ELE-L6-166", "discipline": "electrical"}
+{"text": "Foundation 169 at Area A completed, 50%.", "truth": "CIV-L6-169", "discipline": "civil"}
+{"text": "Install pump 172 at Unit 2 completed, 100%.", "truth": "ROT-L6-172", "discipline": "rotating_equipment"}
+{"text": "Safety inspection 175 at Site completed, 50%.", "truth": "HSE-L6-175", "discipline": "hse"}
+{"text": "Erect vessel 178 at Unit 2 completed, 100%.", "truth": "STA-L6-178", "discipline": "static_equipment"}
