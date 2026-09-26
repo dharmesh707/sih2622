@@ -1,0 +1,16 @@
+{
+  "data_date": "2026-09-01",
+  "seed": 26122,
+  "project_id": 2,
+  "distractor_project_id": 3,
+  "activities": 82,
+  "distractor_activities": 27,
+  "dev_cases": 56,
+  "held_out_cases": 84,
+  "sha256": {
+    "schedule_project2.csv": "7e5b9344390bd13db3eeeaa2f2b91603bb81f222d798b8a8eb678362ef4b2f45",
+    "schedule_project3.csv": "a1da74bdf2fec4e1e082fa1d0d7cb2bd298fbd1bd1e66e87c5c1896aad4bb4ef",
+    "dev.jsonl": "4af0484f588d11a74e4803213fbb918226690d7e952b3a5400e2cfacd47e6355",
+    "held_out.jsonl": "bd30ad3512eaabb8228538274141d646c37a0adc0f6de3011f55c8697779a8ad"
+  }
+}

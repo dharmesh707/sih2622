@@ -1,22 +1,57 @@
 # API
 
-Core endpoints:
+All routes are under `/api/v1` and are unauthenticated (prototype). Errors return `{"detail": "..."}`:
+- 404: missing project, event or activity.
+- 409: wrong-project activity, event already approved or rejected (also under concurrent confirms), dependency cycle, **progress regression** (the activity is already complete, or the reported % is below its current %; nothing is written).
+- 422: invalid input or delay cause, a future `report_date`, or a report with no progress or start to apply (including negated or future-tense wording).
+- 503: semantic model not provisioned.
 
-- `POST /api/v1/projects/{id}/schedule/import`
-- `GET /api/v1/projects/{id}/activities`
-- `GET /api/v1/activities/{id}`
-- `POST /api/v1/reports`
-- `GET /api/v1/events/{id}` and `/candidates`
-- `GET /api/v1/review-queue`
-- `POST /api/v1/events/{id}/confirm` and `/reject`
-- `POST /api/v1/projects/{id}/recompute`
-- `GET /api/v1/projects/{id}/critical-path`
-- `GET /api/v1/analytics/discipline-productivity`
-- `GET /api/v1/analytics/delay-causes`
-- `GET /api/v1/analytics/variance`
-- `GET /api/v1/memory/similar`
-- `GET /api/v1/audit`
-- `GET /api/v1/terminology-map`
-- `POST /api/v1/agent/message`
+## Projects and schedule
 
-Report responses include `event`, `match`, and measured `latency_ms`. Candidate responses include every persisted sub-score and evidence mapping.
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/projects` | List projects |
+| GET | `/projects/{id}/activities` | Activities with forecast `early_start`/`early_finish`, `total_float`, `critical`, `at_risk`, `at_risk_reason`. Recomputes first if the data date moved since the last snapshot (also `/critical-path`) |
+| GET | `/projects/{id}/dependencies` | Edges with predecessor/successor codes, `dependency_type` (FS/SS/FF/SF), `lag` |
+| POST | `/projects/{id}/schedule/import` | Multipart CSV/XLSX, ≤10 MB. Activity file: `activity_code, description, planned_start, planned_finish, discipline` + optional `wbs_path, level, location, contractor, resource, predecessor, relationship, lag`. Or a dependency-only file: `predecessor, successor[, relationship, lag]`. Returns `{inserted, dependencies_inserted, errors[], rows}`; 409 if the graph would contain a cycle (nothing saved) |
+| POST | `/projects/{id}/recompute` | Forecast CPM with data date = today; updates at-risk flags |
+| GET | `/projects/{id}/critical-path` | Critical activities |
+| GET | `/projects/{id}/snapshots/{sid}/diff` | Compare a CPM snapshot with the latest |
+| GET | `/activities/{id}` | One activity with CPM columns |
+
+## Reports, matching and decisions
+
+| Method | Path | Notes |
+|---|---|---|
+| POST | `/reports` | `{project_id=1, text, source="text", report_date?}` → `{report_id, event_id, event, match{decision, reason, top_score, second_score, margin, activity_id, reranker_*}, latency_ms}` |
+| GET | `/events/{id}` | Event, `project_id`, latest decision |
+| GET | `/events/{id}/candidates` | Up to 20 ranked candidates with `score_id/lexical/semantic/context`, `temporal_factor`, `fused_score`, evidence (mapped terms, source span, matching stage) |
+| POST | `/reports` details | `event.identifiers` includes tags and line numbers (`event.line_numbers`); `event.inference_note` explains when negated or future wording suppressed progress/start. A confident match with nothing to apply is returned as `REVIEW_REQUIRED` with that reason. `report_date` must not be in the future |
+| GET | `/review-queue?project_id=` | Events whose **latest** decision is `REVIEW_REQUIRED` or `UNMATCHED`, with `reason` |
+| GET | `/awaiting-confirmation?project_id=` | Events whose latest decision is `AUTO_MATCHED` and not yet confirmed or rejected, with the proposed activity, scores, reason, report text, source and time |
+| POST | `/events/{id}/send-to-review` | `{actor, comment}`. Moves a pending `AUTO_MATCHED` event to `REVIEW_REQUIRED` (409 otherwise) |
+| POST | `/events/{id}/confirm` | `{activity_id?, actor, comment, delay_cause?}`. `activity_id` may be omitted only for `AUTO_MATCHED`. Returns `{activity, old, new, before, after, impact{project_finish_before/after, project_finish_change_days, critical_entered, critical_left, float_changes, at_risk, milestones}, audit, approval_status}`. `approval_status` is `approved`, `reassigned` or `manual_association` |
+| POST | `/events/{id}/reject` | `{actor, comment}`. 409 if already approved or rejected |
+| POST | `/events/{id}/delay-cause` | `{cause, notes}`. The cause must be one of `/delay-cause-categories` |
+
+## Time Agent
+
+| Method | Path | Notes |
+|---|---|---|
+| POST | `/agent/message` | `{project_id, text, session_id?}` → `{session_id, state (idle/clarifying/awaiting_confirmation), reply, event_id, match, event, confirmation}` |
+| GET | `/agent/sessions/{id}?project_id=` | Session state and full transcript; 404 if the session belongs to another project. A `session_id` from another project in `/agent/message` starts a new session instead of reusing it |
+
+## Analytics, memory and audit
+
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/analytics/variance?project_id=` | Per-activity planned vs actual start, finish and duration variance (days) + summary |
+| GET | `/analytics/discipline-productivity?project_id=` | By discipline and activity type: progress, completed, average planned duration, average actual duration (actuals only) |
+| GET | `/analytics/delay-causes?project_id=` | `{counts[], weekly[]}` |
+| GET | `/analytics/wbs-progress?project_id=` | Average progress per WBS path |
+| GET | `/memory/similar?project_id=&discipline=&location=&activity_type=&description=` | Execution memory from confirmed actuals; `actual_duration` is null until finished |
+| GET | `/memory/summary?project_id=` | Memory aggregated by discipline and activity type |
+| GET | `/audit?project_id=` | Latest 100 audit rows with activity code |
+| GET | `/terminology-map` | Mappings loaded from `data/terminology_map.v1.yaml` |
+| GET | `/delay-cause-categories` | Allowed delay causes |
+| GET | `/ml/status` | Model name, pinned revision, `semantic_model_available`, reranker flags |

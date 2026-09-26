@@ -1,0 +1,56 @@
+{"category": "near_duplicate", "text": "Pump alignment done in Unit 3, 100%.", "truth": "ROT-A303", "ambiguous": true, "id": "c056"}
+{"category": "synonym", "text": "Transmitter PT-106 has been checked and set against the reference gauge, 100%.", "truth": "INS-PT-106", "ambiguous": false, "id": "c018"}
+{"category": "typo_ocr", "text": "Instal pumpp P-3O5, 30%.", "truth": "ROT-I305", "ambiguous": false, "id": "c051"}
+{"category": "terminology", "text": "Spool line 2106 erected on rack 3, 100%.", "truth": "PIP-2106", "ambiguous": false, "id": "c131"}
+{"category": "synonym", "text": "Pump P-305 shaft lined up with the motor, 70%.", "truth": "ROT-A305", "ambiguous": false, "id": "c022"}
+{"category": "synonym", "text": "Pump P-306 shaft lined up with the motor, 20%.", "truth": "ROT-A306", "ambiguous": false, "id": "c025"}
+{"category": "near_duplicate", "text": "Piping segment erected at rack 1, 20%.", "truth": "PIP-2107", "ambiguous": true, "id": "c066"}
+{"category": "missing_timestamp", "text": "Vessel V-204 erected, 40%.", "truth": "STA-V-204", "ambiguous": false, "id": "c089"}
+{"category": "synonym", "text": "Pump P-306 shaft lined up with the motor, 60%.", "truth": "ROT-A306", "ambiguous": false, "id": "c026"}
+{"category": "synonym", "text": "Crew put up the pipe for line 2106 on rack 3, 50%.", "truth": "PIP-2106", "ambiguous": false, "id": "c027"}
+{"category": "wrong_discipline", "text": "Piping crew calibrated transmitter PT-106, 100%.", "truth": "INS-PT-106", "ambiguous": true, "id": "c109"}
+{"category": "synonym", "text": "Transmitter PT-106 has been checked and set against the reference gauge, 100%.", "truth": "INS-PT-106", "ambiguous": false, "id": "c017"}
+{"category": "terminology", "text": "Hydrotest line 2103 passed, 100%.", "truth": "PTS-2103", "ambiguous": false, "id": "c129"}
+{"category": "granularity", "text": "Pump area mechanical works in Unit 3, 60%.", "truth": null, "ambiguous": true, "id": "c124"}
+{"category": "wrong_discipline", "text": "Piping crew calibrated transmitter PT-102, 100%.", "truth": "INS-PT-102", "ambiguous": true, "id": "c099"}
+{"category": "typo_ocr", "text": "Erect vesel V-2O2, 80%.", "truth": "STA-V-202", "ambiguous": false, "id": "c055"}
+{"category": "exact", "text": "Pressure test line 2101 done, 100%.", "truth": "PTS-2101", "ambiguous": false, "id": "c013"}
+{"category": "synonym", "text": "Vessel V-204 lifted into position by the crane team, 20%.", "truth": "STA-V-204", "ambiguous": false, "id": "c023"}
+{"category": "missing_timestamp", "text": "Vessel V-204 erected, 30%.", "truth": "STA-V-204", "ambiguous": false, "id": "c088"}
+{"category": "wrong_discipline", "text": "Piping crew calibrated transmitter PT-106, 100%.", "truth": "INS-PT-106", "ambiguous": true, "id": "c100"}
+{"category": "missing_timestamp", "text": "Line 2104 piping segment erected at R01, 100%.", "truth": "PIP-2104", "ambiguous": false, "id": "c096"}
+{"category": "typo_ocr", "text": "Calibrate presure transmiter PT-1O5, 20%.", "truth": "INS-PT-105", "ambiguous": false, "id": "c053"}
+{"category": "granularity", "text": "Pump area mechanical works in Unit 3, 60%.", "truth": null, "ambiguous": true, "id": "c118"}
+{"category": "typo_ocr", "text": "Erect pipng segmnt line 21O3 at R03, 40%.", "truth": "PIP-2103", "ambiguous": false, "id": "c049"}
+{"category": "exact", "text": "Calibrate pressure transmitter PT-101 finished, 100%.", "truth": "INS-PT-101", "ambiguous": false, "id": "c010"}
+{"category": "wrong_discipline", "text": "Civil crew erected vessel V-204, 40%.", "truth": "STA-V-204", "ambiguous": true, "id": "c104"}
+{"category": "abbreviation", "text": "Ln 2111 pip seg erctd R02 100%", "truth": "PIP-2111", "ambiguous": false, "id": "c031"}
+{"category": "typo_ocr", "text": "Erect vesel V-2O5, 50%.", "truth": "STA-V-205", "ambiguous": false, "id": "c052"}
+{"category": "exact", "text": "Install pump P-305, 100%.", "truth": "ROT-I305", "ambiguous": false, "id": "c005"}
+{"category": "wrong_discipline", "text": "Civil crew erected vessel V-201, 40%.", "truth": "STA-V-201", "ambiguous": true, "id": "c102"}
+{"category": "granularity", "text": "Instrumentation calibration package 50% complete.", "truth": null, "ambiguous": true, "id": "c122"}
+{"category": "near_duplicate", "text": "Pump alignment done in Unit 3, 100%.", "truth": "ROT-A305", "ambiguous": true, "id": "c062"}
+{"category": "near_duplicate", "text": "Pump alignment done in Unit 3, 100%.", "truth": "ROT-A303", "ambiguous": true, "id": "c069"}
+{"category": "missing_timestamp", "text": "Line 2101 piping segment erected at R01, 30%.", "truth": "PIP-2101", "ambiguous": false, "id": "c097"}
+{"category": "wrong_discipline", "text": "Electrical crew installed pump P-306 at 14:30, 30%.", "truth": "ROT-I306", "ambiguous": true, "id": "c110"}
+{"category": "synonym", "text": "Pump P-301 shaft lined up with the motor, 60%.", "truth": "ROT-A301", "ambiguous": false, "id": "c015"}
+{"category": "granularity", "text": "Pump area mechanical works in Unit 3, 60%.", "truth": null, "ambiguous": true, "id": "c113"}
+{"category": "exact", "text": "Calibrate pressure transmitter PT-104 finished, 100%.", "truth": "INS-PT-104", "ambiguous": false, "id": "c003"}
+{"category": "granularity", "text": "Pump area mechanical works in Unit 3, 60%.", "truth": null, "ambiguous": true, "id": "c117"}
+{"category": "abbreviation", "text": "Ln 2101 pip seg erctd R01 20%", "truth": "PIP-2101", "ambiguous": false, "id": "c034"}
+{"category": "abbreviation", "text": "Inst pmp P303 80%", "truth": "ROT-I303", "ambiguous": false, "id": "c037"}
+{"category": "exact", "text": "Calibrate pressure transmitter PT-102 finished, 100%.", "truth": "INS-PT-102", "ambiguous": false, "id": "c008"}
+{"category": "terminology", "text": "Boltup line 2104 done @ 16:00, 100%.", "truth": "BLT-2104", "ambiguous": false, "id": "c133"}
+{"category": "synonym", "text": "Vessel V-202 lifted into position by the crane team, 20%.", "truth": "STA-V-202", "ambiguous": false, "id": "c021"}
+{"category": "typo_ocr", "text": "Instal pumpp P-3O2, 30%.", "truth": "ROT-I302", "ambiguous": false, "id": "c045"}
+{"category": "terminology", "text": "Spool line 2106 erected on rack 3, 50%.", "truth": "PIP-2106", "ambiguous": false, "id": "c137"}
+{"category": "typo_ocr", "text": "Instal pumpp P-3O5, 80%.", "truth": "ROT-I305", "ambiguous": false, "id": "c042"}
+{"category": "unknown", "text": "Fireproofing of pipe rack columns in area West, 50%.", "truth": null, "ambiguous": false, "id": "c070"}
+{"category": "exact", "text": "Pressure test line 2102 done, 100%.", "truth": "PTS-2102", "ambiguous": false, "id": "c004"}
+{"category": "exact", "text": "Install pump P-306, 30%.", "truth": "ROT-I306", "ambiguous": false, "id": "c012"}
+{"category": "wrong_discipline", "text": "Electrical crew installed pump P-304 at 14:30, 50%.", "truth": "ROT-I304", "ambiguous": true, "id": "c103"}
+{"category": "synonym", "text": "Vessel V-204 lifted into position by the crane team, 50%.", "truth": "STA-V-204", "ambiguous": false, "id": "c016"}
+{"category": "terminology", "text": "Spool line 2103 erected on rack 3, 20%.", "truth": "PIP-2103", "ambiguous": false, "id": "c126"}
+{"category": "near_duplicate", "text": "Piping segment erected at rack 2, 80%.", "truth": "PIP-2108", "ambiguous": true, "id": "c068"}
+{"category": "granularity", "text": "All piping on rack 1 package complete, 100%.", "truth": null, "ambiguous": true, "id": "c116"}
+{"category": "exact", "text": "Erect piping segment line 2112 at R03, 100%.", "truth": "PIP-2112", "ambiguous": false, "id": "c011"}

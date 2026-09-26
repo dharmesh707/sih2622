@@ -1,0 +1,83 @@
+activity_code,description,wbs_path,level,discipline,location,planned_start,planned_finish
+PIP-2101,Erect piping segment line 2101 at R01,BENCH/PIPING/R01,6,piping,R01,2026-09-12,2026-09-17
+PTS-2101,Pressure test line 2101,BENCH/PIPING/R01,6,piping,R01,2026-09-13,2026-09-18
+PIP-2102,Erect piping segment line 2102 at R02,BENCH/PIPING/R02,6,piping,R02,2026-08-25,2026-08-29
+PTS-2102,Pressure test line 2102,BENCH/PIPING/R02,6,piping,R02,2026-08-27,2026-08-29
+PIP-2103,Erect piping segment line 2103 at R03,BENCH/PIPING/R03,6,piping,R03,2026-09-06,2026-09-08
+PTS-2103,Pressure test line 2103,BENCH/PIPING/R03,6,piping,R03,2026-09-08,2026-09-11
+PIP-2104,Erect piping segment line 2104 at R01,BENCH/PIPING/R01,6,piping,R01,2026-08-28,2026-08-31
+PTS-2104,Pressure test line 2104,BENCH/PIPING/R01,6,piping,R01,2026-08-29,2026-09-02
+PIP-2105,Erect piping segment line 2105 at R02,BENCH/PIPING/R02,6,piping,R02,2026-09-09,2026-09-11
+PTS-2105,Pressure test line 2105,BENCH/PIPING/R02,6,piping,R02,2026-08-24,2026-08-27
+PIP-2106,Erect piping segment line 2106 at R03,BENCH/PIPING/R03,6,piping,R03,2026-09-04,2026-09-05
+PTS-2106,Pressure test line 2106,BENCH/PIPING/R03,6,piping,R03,2026-09-06,2026-09-08
+PIP-2107,Erect piping segment line 2107 at R01,BENCH/PIPING/R01,6,piping,R01,2026-08-31,2026-09-03
+PTS-2107,Pressure test line 2107,BENCH/PIPING/R01,6,piping,R01,2026-08-28,2026-08-30
+PIP-2108,Erect piping segment line 2108 at R02,BENCH/PIPING/R02,6,piping,R02,2026-09-06,2026-09-08
+PTS-2108,Pressure test line 2108,BENCH/PIPING/R02,6,piping,R02,2026-08-25,2026-08-29
+PIP-2109,Erect piping segment line 2109 at R03,BENCH/PIPING/R03,6,piping,R03,2026-08-27,2026-08-29
+PTS-2109,Pressure test line 2109,BENCH/PIPING/R03,6,piping,R03,2026-08-27,2026-08-28
+PIP-2110,Erect piping segment line 2110 at R01,BENCH/PIPING/R01,6,piping,R01,2026-09-02,2026-09-07
+PTS-2110,Pressure test line 2110,BENCH/PIPING/R01,6,piping,R01,2026-08-31,2026-09-05
+PIP-2111,Erect piping segment line 2111 at R02,BENCH/PIPING/R02,6,piping,R02,2026-09-09,2026-09-11
+PTS-2111,Pressure test line 2111,BENCH/PIPING/R02,6,piping,R02,2026-08-22,2026-08-23
+PIP-2112,Erect piping segment line 2112 at R03,BENCH/PIPING/R03,6,piping,R03,2026-09-07,2026-09-12
+PTS-2112,Pressure test line 2112,BENCH/PIPING/R03,6,piping,R03,2026-08-30,2026-09-02
+BLT-2101,Flange bolting line 2101,BENCH/PIPING/R01,6,piping,R01,2026-08-28,2026-08-31
+BLT-2102,Flange bolting line 2102,BENCH/PIPING/R02,6,piping,R02,2026-08-31,2026-09-02
+BLT-2103,Flange bolting line 2103,BENCH/PIPING/R03,6,piping,R03,2026-08-31,2026-09-01
+BLT-2104,Flange bolting line 2104,BENCH/PIPING/R01,6,piping,R01,2026-09-09,2026-09-13
+BLT-2105,Flange bolting line 2105,BENCH/PIPING/R02,6,piping,R02,2026-09-06,2026-09-08
+BLT-2106,Flange bolting line 2106,BENCH/PIPING/R03,6,piping,R03,2026-09-13,2026-09-18
+CIV-F301,Pour foundation for pump P-301,BENCH/CIVIL/Unit 3,6,civil,Unit 3,2026-08-31,2026-09-01
+ROT-I301,Install pump P-301,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-10,2026-09-15
+ROT-A301,Align pump P-301,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-08-30,2026-09-02
+CIV-F302,Pour foundation for pump P-302,BENCH/CIVIL/Unit 3,6,civil,Unit 3,2026-08-23,2026-08-25
+ROT-I302,Install pump P-302,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-02,2026-09-07
+ROT-A302,Align pump P-302,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-04,2026-09-08
+CIV-F303,Pour foundation for pump P-303,BENCH/CIVIL/Unit 3,6,civil,Unit 3,2026-09-06,2026-09-11
+ROT-I303,Install pump P-303,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-07,2026-09-09
+ROT-A303,Align pump P-303,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-08-30,2026-08-31
+CIV-F304,Pour foundation for pump P-304,BENCH/CIVIL/Unit 3,6,civil,Unit 3,2026-09-12,2026-09-17
+ROT-I304,Install pump P-304,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-12,2026-09-16
+ROT-A304,Align pump P-304,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-10,2026-09-11
+CIV-F305,Pour foundation for pump P-305,BENCH/CIVIL/Unit 3,6,civil,Unit 3,2026-09-03,2026-09-08
+ROT-I305,Install pump P-305,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-01,2026-09-05
+ROT-A305,Align pump P-305,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-08-23,2026-08-26
+CIV-F306,Pour foundation for pump P-306,BENCH/CIVIL/Unit 3,6,civil,Unit 3,2026-08-30,2026-09-03
+ROT-I306,Install pump P-306,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-08-30,2026-09-04
+ROT-A306,Align pump P-306,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-08-26,2026-08-31
+ROT-CT103,Install pump CT-103,BENCH/ROTATING_EQUIPMENT/Unit 2,6,rotating_equipment,Unit 2,2026-08-29,2026-09-01
+ROT-K401,Align compressor K-401,BENCH/ROTATING_EQUIPMENT/Unit 2,6,rotating_equipment,Unit 2,2026-09-06,2026-09-10
+STA-V-201,Erect vessel V-201,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-09-12,2026-09-15
+STA-V-202,Erect vessel V-202,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-09-04,2026-09-08
+STA-V-203,Erect vessel V-203,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-09-05,2026-09-09
+STA-V-204,Erect vessel V-204,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-09-04,2026-09-06
+STA-V-205,Erect vessel V-205,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-09-12,2026-09-13
+STA-E101,Set heat exchanger E-101,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-08-27,2026-09-01
+STA-E102,Set heat exchanger E-102,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-08-26,2026-08-27
+STA-E103,Set heat exchanger E-103,BENCH/STATIC_EQUIPMENT/Unit 2,6,static_equipment,Unit 2,2026-09-05,2026-09-10
+CIV-TN,Excavate trench area North,BENCH/CIVIL/Area North,6,civil,Area North,2026-09-03,2026-09-04
+HSE-N,Permit and safety inspection area North,BENCH/HSE/Area North,6,hse,Area North,2026-09-03,2026-09-07
+CIV-TS,Excavate trench area South,BENCH/CIVIL/Area South,6,civil,Area South,2026-09-04,2026-09-09
+HSE-S,Permit and safety inspection area South,BENCH/HSE/Area South,6,hse,Area South,2026-09-11,2026-09-15
+CIV-TE,Excavate trench area East,BENCH/CIVIL/Area East,6,civil,Area East,2026-08-30,2026-09-03
+HSE-E,Permit and safety inspection area East,BENCH/HSE/Area East,6,hse,Area East,2026-09-02,2026-09-07
+ELE-F-11,Cable installation feeder F-11 to MCC-1,BENCH/ELECTRICAL/Substation,6,electrical,Substation,2026-08-29,2026-09-03
+ELE-F-12,Cable installation feeder F-12 to MCC-2,BENCH/ELECTRICAL/Substation,6,electrical,Substation,2026-09-05,2026-09-06
+ELE-F-13,Cable installation feeder F-13 to MCC-1,BENCH/ELECTRICAL/Substation,6,electrical,Substation,2026-08-27,2026-08-30
+ELE-F-14,Cable installation feeder F-14 to MCC-2,BENCH/ELECTRICAL/Substation,6,electrical,Substation,2026-08-30,2026-09-03
+ELE-F-15,Cable installation feeder F-15 to MCC-1,BENCH/ELECTRICAL/Substation,6,electrical,Substation,2026-08-31,2026-09-05
+ELE-F-16,Cable installation feeder F-16 to MCC-2,BENCH/ELECTRICAL/Substation,6,electrical,Substation,2026-09-02,2026-09-03
+ELE-TR1,Install cable tray at R01,BENCH/ELECTRICAL/R01,6,electrical,R01,2026-08-30,2026-09-04
+ELE-TR2,Install cable tray at R02,BENCH/ELECTRICAL/R02,6,electrical,R02,2026-09-01,2026-09-06
+ELE-TR3,Install cable tray at R03,BENCH/ELECTRICAL/R03,6,electrical,R03,2026-08-25,2026-08-28
+INS-PT-101,Calibrate pressure transmitter PT-101,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-02,2026-09-04
+INS-PT-102,Calibrate pressure transmitter PT-102,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-28,2026-08-30
+INS-PT-103,Calibrate pressure transmitter PT-103,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-12,2026-09-16
+INS-PT-104,Calibrate pressure transmitter PT-104,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-13,2026-09-16
+INS-PT-105,Calibrate pressure transmitter PT-105,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-03,2026-09-04
+INS-PT-106,Calibrate pressure transmitter PT-106,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-27,2026-08-29
+INS-LC1,Loop check FT-201,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-01,2026-09-04
+INS-LC2,Loop check FT-202,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-31,2026-09-03
+INS-LC3,Loop check FT-203,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-25,2026-08-28

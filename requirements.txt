@@ -1,9 +1,16 @@
-fastapi
-uvicorn[standard]
-pydantic
-networkx
-openpyxl
-httpx
-pytest
-python-multipart
-sentence-transformers
+# Pinned to the versions verified on 2026-09-26 (Python 3.13, Windows 11).
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+pydantic==2.13.5
+networkx==3.7
+openpyxl==3.1.5
+httpx==0.28.1
+pytest==9.1.1
+python-multipart==0.0.32
+PyYAML==6.0.3
+# Semantic model stack (MiniLM revision is pinned in backend/app.py)
+sentence-transformers==6.1.0
+transformers==5.17.0
+torch==2.14.0
+# Only for the optional reranker artifact and its scripts
+scikit-learn==1.9.1

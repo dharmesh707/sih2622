@@ -37,3 +37,39 @@ textarea{display:block;width:100%;height:165px;resize:vertical;border:1px solid 
 .toast{position:fixed;right:22px;bottom:22px;z-index:50;min-width:280px;max-width:460px;background:var(--ink);color:var(--white);padding:13px 14px;border-radius:7px;box-shadow:0 14px 38px rgba(0,0,0,.18);display:flex;justify-content:space-between;gap:16px;font-size:13px}.toast.success{border-left:4px solid var(--teal)}.toast.warning{border-left:4px solid var(--orange)}.toast.error{border-left:4px solid var(--red)}.toast button{border:0;background:none;color:inherit;font-size:18px;line-height:1}
 @media(max-width:1050px){.grid.two,.analytics-grid{grid-template-columns:1fr}.wide-panel{grid-column:auto}.title-row{align-items:flex-start;flex-direction:column}.diff-grid{grid-template-columns:1fr}.entered-left{grid-template-columns:1fr}}
 @media(max-width:850px){.topbar{padding:0 18px}.status{display:none}.rail{width:72px;padding:20px 8px}.nav{justify-content:center;padding:13px 4px}.nav:not(.active){font-size:0}.nav span{font-size:10px}.rail-footer{font-size:0;padding:4px}.content{padding:35px 18px}.metric-strip{grid-template-columns:repeat(2,1fr)}.metric-strip div:nth-child(2){border-right:0}.score-grid{grid-template-columns:repeat(2,1fr)}h1{font-size:38px}.upload-row{align-items:flex-start;flex-direction:column}}
+/* v1.2: candidate comparison, review safety, gantt, project selector */
+.status select{font:11px 'DM Mono';border:1px solid var(--line);background:var(--white);border-radius:4px;padding:4px 6px;color:var(--ink)}
+.result-panel{margin-top:20px}.result-panel p{line-height:1.5}
+.candidate-table{min-width:760px}.candidate-table td{padding:10px 8px}.candidate-table tr.selected td{background:#eef6e3}.candidate-table tbody tr{cursor:default}.candidate-table input[type=radio]{accent-color:var(--teal);width:16px;height:16px}
+.review-card.unmatched{border-left-color:var(--red)}.warning-note{background:#fae8e5;color:#7d2f2a;border-radius:5px;padding:10px 12px;font-size:13px}
+.review-actions .comment{flex:1;min-width:160px;border:1px solid var(--line);border-radius:5px;padding:9px 11px}.review-actions{flex-wrap:wrap;align-items:center}
+.gantt{overflow-x:auto}.gantt-row{display:grid;grid-template-columns:minmax(220px,300px) 110px minmax(520px,1fr);border-bottom:1px solid #edf1ed;min-height:46px;align-items:center}
+.gantt-head{position:sticky;top:0;background:var(--white);z-index:2;font:10px 'DM Mono';color:var(--muted);text-transform:uppercase;letter-spacing:.06em;min-height:30px}
+.gantt-label{padding:6px 10px 6px 0;font-size:12px;line-height:1.3}.gantt-label small,.gantt-meta small{display:block;font-size:10px;margin-top:2px}.gantt-meta{font:11px 'DM Mono';padding-right:8px}
+.gantt-track{position:relative;height:100%;min-height:30px}.gantt-head .gantt-track{height:30px}.tick{position:absolute;top:8px;font-size:10px;transform:translateX(-50%)}
+.bar{position:absolute;height:9px;border-radius:3px}.bar.planned{top:10px;background:#dfe9e3;border:1px solid #b9ccc1}.bar.planned.critical{background:#f6d6d2;border-color:var(--red)}
+.bar.actual{top:23px;background:#cfe0d9;overflow:hidden}.bar.actual i{display:block;height:100%;background:var(--teal)}
+.today-line{position:absolute;top:0;bottom:0;border-left:2px dashed var(--orange);opacity:.7}.gantt-row.risk{background:#fff6ef}
+.gantt-legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px}.lg{display:inline-block;width:18px;height:8px;border-radius:2px;vertical-align:middle;margin-right:4px}.lg.planned{background:#dfe9e3;border:1px solid #b9ccc1}.lg.planned.critical{background:#f6d6d2;border-color:var(--red)}.lg.actual{background:var(--teal)}.lg.today{border-left:2px dashed var(--orange);width:2px}
+.delay-select,.memory-filters select{border:1px solid var(--line);border-radius:5px;padding:9px 8px;background:var(--white);font:12px 'DM Mono'}
+.memory-panel{margin:20px 0}.memory-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.memory-filters input:not([type=checkbox]){flex:1;min-width:150px;border:1px solid var(--line);border-radius:5px;padding:9px 11px}
+.analytics-grid{margin-top:20px}
+.done-chip{margin-left:6px;font:10px 'DM Mono';background:#fae8e5;color:#7d2f2a;border-radius:99px;padding:3px 7px}
+.awaiting{margin-bottom:26px}.awaiting h2{font-size:19px;letter-spacing:-.03em}.review-card.auto{border-left-color:var(--teal)}
+/* F-09: phone widths — keep the project selector, never let wide tables stretch the page */
+.content,.shell>*{min-width:0}
+.table-wrap,.gantt{max-width:100%}
+@media(max-width:850px){
+  .status{display:flex;align-items:center}.status .pulse,.status .status-label,.status .divider{display:none}
+  .status select{max-width:150px}
+  .topbar{gap:10px}.brand small{display:none}
+  h1{font-size:30px;overflow-wrap:anywhere}.lede{font-size:14px}
+  .panel{padding:16px}.panel-head{flex-wrap:wrap}
+  .result-panel p,.review-card pre{overflow-wrap:anywhere}
+  .review-actions .comment{min-width:0;flex-basis:100%}
+  .diff-grid,.entered-left{grid-template-columns:1fr}
+}
+.review-list{grid-template-columns:minmax(0,1fr)}.review-list>*,.grid>*,.analytics-grid>*{min-width:0}
+@media(max-width:1050px){.grid.two,.analytics-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:850px){.nav.active{font-size:0}.nav.active span{font-size:10px}.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){.upload-row label{flex-wrap:wrap;max-width:100%}.upload-row input[type=file]{max-width:100%}}
