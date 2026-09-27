@@ -1,3 +1,5 @@
+> **Historical snapshot (revision `12b4376`, 2026-09-22).** Superseded by [README.md](README.md), [docs/](docs) and [PROGRESS.md](PROGRESS.md). Many limitations described below (static UI, hardcoded project 1, planned-only CPM, one-shot Time Agent, proxy-fallback claims) have since been fixed.
+
 # ProgressSync AI: Final Prototype Technical Handover
 
 **Project:** ProgressSync AI - SIH26122  

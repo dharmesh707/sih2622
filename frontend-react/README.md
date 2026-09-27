@@ -1,35 +1,23 @@
 # ProgressSync AI — React frontend
 
-This is a React/Vite rewrite of the original `frontend/index.html`, `frontend/app.js`, and `frontend/styles.css` while keeping the existing FastAPI `/api/v1/*` contract.
-
-## Development
-
-From this directory:
+This is the only supported UI. It uses the FastAPI `/api/v1` contract ([docs/api.md](../docs/api.md)) with live data only; there are no mock states.
 
 ```powershell
-npm install
-npm run dev
+npm ci
+npm run dev      # http://127.0.0.1:5173, proxies /api to the backend on :8000
+npm run build    # dist/, which FastAPI then serves at http://127.0.0.1:8000/
 ```
 
-Keep the existing FastAPI backend running on `http://127.0.0.1:8000`. Vite proxies `/api` requests to that backend.
+## Views
 
-Open `http://127.0.0.1:5173`.
+A project selector in the top bar scopes every view.
 
-## Production build
-
-```powershell
-npm run build
-npm run preview
-```
-
-The build output is `dist/`.
-
-## Included flows
-
-- Ingest: text report, browser speech input, samples, schedule import, Time Agent, metrics
-- Review: candidate evidence, component scores, approve/reject, post-confirm CPM diff
-- Schedule: activities, actual progress, float, state, CPM recompute
-- Analytics: discipline productivity, WBS variance, delay causes
-- Audit + memory: audit trail, institutional memory, terminology map
-
-No backend endpoint or data model is changed by this frontend rewrite.
+1. **Ingest**:
+   - A field report produces a decision card with the reason, extracted fields, top-3 candidates and evidence.
+   - **Confirm** is available for AUTO_MATCHED, with an optional delay cause.
+   - Schedule import (CSV/XLSX with dependencies).
+   - The Time Agent chat, with a persisted session, clarification, and yes/no confirmation.
+2. **Review queue**: top-5 candidate comparison with explicit selection. The action changes between confirm, reassign and manual association (for UNMATCHED). Also comment, delay cause and reject.
+3. **Schedule**: Gantt with planned and actual bars, progress, predecessors, critical path, at-risk flags and forecast finish; plus CPM recompute.
+4. **Analytics**: planned-vs-actual variance, productivity by discipline and activity type, delay causes and trend, WBS progress.
+5. **Audit + memory**: audit trail, institutional-memory search (description, discipline, location, all projects), and the terminology map.

@@ -1,0 +1,28 @@
+activity_code,description,wbs_path,level,discipline,location,planned_start,planned_finish
+ZPIP-2101,Erect piping segment line 2101 at R01,BENCH/PIPING/R01,6,piping,R01,2026-09-12,2026-09-17
+ZPIP-2102,Erect piping segment line 2102 at R02,BENCH/PIPING/R02,6,piping,R02,2026-08-25,2026-08-29
+ZPIP-2103,Erect piping segment line 2103 at R03,BENCH/PIPING/R03,6,piping,R03,2026-09-06,2026-09-08
+ZPIP-2104,Erect piping segment line 2104 at R01,BENCH/PIPING/R01,6,piping,R01,2026-08-28,2026-08-31
+ZPIP-2105,Erect piping segment line 2105 at R02,BENCH/PIPING/R02,6,piping,R02,2026-09-09,2026-09-11
+ZPIP-2106,Erect piping segment line 2106 at R03,BENCH/PIPING/R03,6,piping,R03,2026-09-04,2026-09-05
+ZPIP-2107,Erect piping segment line 2107 at R01,BENCH/PIPING/R01,6,piping,R01,2026-08-31,2026-09-03
+ZPIP-2108,Erect piping segment line 2108 at R02,BENCH/PIPING/R02,6,piping,R02,2026-09-06,2026-09-08
+ZPIP-2109,Erect piping segment line 2109 at R03,BENCH/PIPING/R03,6,piping,R03,2026-08-27,2026-08-29
+ZPIP-2110,Erect piping segment line 2110 at R01,BENCH/PIPING/R01,6,piping,R01,2026-09-02,2026-09-07
+ZPIP-2111,Erect piping segment line 2111 at R02,BENCH/PIPING/R02,6,piping,R02,2026-09-09,2026-09-11
+ZPIP-2112,Erect piping segment line 2112 at R03,BENCH/PIPING/R03,6,piping,R03,2026-09-07,2026-09-12
+ZROT-I301,Install pump P-301,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-10,2026-09-15
+ZROT-I302,Install pump P-302,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-02,2026-09-07
+ZROT-I303,Install pump P-303,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-07,2026-09-09
+ZROT-I304,Install pump P-304,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-12,2026-09-16
+ZROT-I305,Install pump P-305,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-09-01,2026-09-05
+ZROT-I306,Install pump P-306,BENCH/ROTATING_EQUIPMENT/Unit 3,6,rotating_equipment,Unit 3,2026-08-30,2026-09-04
+ZINS-PT-101,Calibrate pressure transmitter PT-101,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-02,2026-09-04
+ZINS-PT-102,Calibrate pressure transmitter PT-102,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-28,2026-08-30
+ZINS-PT-103,Calibrate pressure transmitter PT-103,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-12,2026-09-16
+ZINS-PT-104,Calibrate pressure transmitter PT-104,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-13,2026-09-16
+ZINS-PT-105,Calibrate pressure transmitter PT-105,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-03,2026-09-04
+ZINS-PT-106,Calibrate pressure transmitter PT-106,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-27,2026-08-29
+ZINS-LC1,Loop check FT-201,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-09-01,2026-09-04
+ZINS-LC2,Loop check FT-202,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-31,2026-09-03
+ZINS-LC3,Loop check FT-203,BENCH/INSTRUMENTATION/Unit 2,6,instrumentation,Unit 2,2026-08-25,2026-08-28

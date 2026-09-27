@@ -4,20 +4,9 @@ from pathlib import Path
 
 os.environ["PROGRESSSYNC_DB"] = str(Path(__file__).parents[1] / "data" / "test.db")
 
-import pytest
 from fastapi.testclient import TestClient
 
-from backend.app import app, connect, init_db
-
-
-@pytest.fixture(autouse=True)
-def fresh_db(tmp_path, monkeypatch):
-    db_path = tmp_path / "progresssync.db"
-    monkeypatch.setenv("PROGRESSSYNC_DB", str(db_path))
-    import backend.app as module
-    module.DB_PATH = db_path
-    init_db()
-    yield
+from backend.app import app
 
 
 def test_report_match_candidates_and_explainability():

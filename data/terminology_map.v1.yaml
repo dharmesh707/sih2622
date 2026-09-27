@@ -1,3 +1,6 @@
+# Authoritative field-language -> schedule-language map. Loaded at every backend start
+# (backend.app.load_terms), validated, and synced into the terminology_map table.
+# Matching compares terms after the same normalization as report text, so "rack-3" == "rack 3".
 version: v1
 source: OIL field lexicon
 mappings:
@@ -7,12 +10,21 @@ mappings:
   - field_term: install
     canonical_term: erect
     discipline: civil
+  - field_term: erection
+    canonical_term: erect
+    discipline: static_equipment
   - field_term: rack 3
     canonical_term: R03
     discipline: piping
   - field_term: CT103
     canonical_term: CT-103
     discipline: rotating_equipment
+  - field_term: boltup
+    canonical_term: bolting
+    discipline: piping
   - field_term: hydrotest
     canonical_term: pressure test
     discipline: piping
+  - field_term: cable pull
+    canonical_term: cable installation
+    discipline: electrical

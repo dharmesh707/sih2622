@@ -1,12 +1,20 @@
 const NAV_ITEMS = [
-  ['ingest', '01', 'Ingest'],
-  ['review', '02', 'Review queue'],
-  ['schedule', '03', 'Schedule'],
-  ['analytics', '04', 'Analytics'],
-  ['audit', '05', 'Audit + memory'],
+  ["ingest", "01", "Ingest"],
+  ["review", "02", "Review queue"],
+  ["schedule", "03", "Schedule"],
+  ["analytics", "04", "Analytics"],
+  ["audit", "05", "Audit + memory"],
 ];
 
-export default function Layout({ activeView, setActiveView, children, demoMode = true }) {
+export default function Layout({
+  activeView,
+  setActiveView,
+  children,
+  projects = [],
+  projectId,
+  setProjectId,
+  onLogout,
+}) {
   return (
     <div className="app-frame">
       <header className="topbar">
@@ -19,9 +27,31 @@ export default function Layout({ activeView, setActiveView, children, demoMode =
         </div>
         <div className="status">
           <span className="pulse" />
-          {demoMode ? 'DEMO MODE' : 'LIVE MODE'}
+          <span className="status-label">LOCAL PIPELINE</span>
           <span className="divider" />
-          OIL / PROJECT 01
+          <label>
+            PROJECT{" "}
+            <select
+              value={projectId}
+              onChange={(e) => setProjectId(Number(e.target.value))}
+            >
+              {!projects.some((p) => p.id === projectId) && (
+                <option value={projectId}>#{projectId}</option>
+              )}
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  #{p.id} · {p.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            className="secondary compact"
+            onClick={onLogout}
+          >
+            Log out
+          </button>
         </div>
       </header>
 
@@ -32,7 +62,7 @@ export default function Layout({ activeView, setActiveView, children, demoMode =
               <button
                 key={view}
                 type="button"
-                className={`nav ${activeView === view ? 'active' : ''}`}
+                className={`nav ${activeView === view ? "active" : ""}`}
                 onClick={() => setActiveView(view)}
               >
                 <span>{number}</span>
@@ -40,7 +70,7 @@ export default function Layout({ activeView, setActiveView, children, demoMode =
               </button>
             ))}
           </nav>
-          <div className="rail-footer">v1.1 / REACT FRONTEND</div>
+          <div className="rail-footer">v1.2 / REACT FRONTEND</div>
         </aside>
 
         <section className="content">{children}</section>
