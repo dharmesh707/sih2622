@@ -1,0 +1,17 @@
+.git
+.gitignore
+.venv
+venv
+node_modules
+frontend-react/dist
+data/*.db
+data/*.db-*
+__pycache__
+*.pyc
+.pytest_cache
+.env
+.env.*
+tests
+docs/reports
+backend/benchmark
+scripts/*.log

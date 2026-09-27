@@ -1,3 +1,40 @@
+# Deployment
+
+The supported demo deployment is a single FastAPI container serving the React build from the same origin. SQLite is intentionally used for this judged single-instance demo; do not run multiple replicas with the current database architecture.
+
+## Local run
+
+Install the pinned Python dependencies and frontend dependencies, provision the model once, reset the demo database, then run the backend:
+
+```powershell
+python -m pip install -r requirements.txt
+python scripts/provision_model.py
+python scripts/reset_demo_db.py
+Set-Content .env "PROGRESSSYNC_API_TOKEN=change-me`nPROGRESSSYNC_CORS_ORIGINS=http://localhost:8000"
+cd frontend-react; npm ci; npm run build; cd ..
+python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000
+```
+
+When `PROGRESSSYNC_API_TOKEN` is set, API routes under `/api/v1` require `Authorization: Bearer <token>`. The React login stores the token only in browser `sessionStorage`; static assets and `/` remain public. For a direct API check:
+
+```powershell
+curl.exe -i http://localhost:8000/api/v1/projects
+curl.exe -i -H "Authorization: Bearer change-me" http://localhost:8000/api/v1/projects
+```
+
+`PROGRESSSYNC_CORS_ORIGINS` is a comma-separated allowlist, primarily for local development or explicitly configured external origins. Same-origin use of the bundled UI does not need CORS.
+
+## Docker
+
+The Docker build downloads and saves `sentence-transformers/all-MiniLM-L6-v2` at pinned revision `1110a243fdf4` into `/opt/progresssync-model` during image construction. Runtime loading uses that local directory with `local_files_only=True`, so the container does not need Hugging Face network access at startup.
+
+```powershell
+docker build -t progresssync-demo .
+docker run --rm -p 8000:8000 -e PROGRESSSYNC_API_TOKEN=change-me progresssync-demo
+```
+
+The container listens on `0.0.0.0:8000`, runs as a non-root user, and creates its SQLite database at `/app/data/progresssync.db`. Do not commit `.env`, credentials, model caches, or SQLite files.
+
 # ProgressSync AI
 
 ProgressSync AI is an offline-first execution-intelligence bridge for SIH26122. It turns messy field observations into explainable L5/L6 schedule updates, recomputes CPM, and preserves the evidence and decision trail.
@@ -16,7 +53,7 @@ cd frontend-react; npm ci; npm run build; cd ..
 
 Matching uses `sentence-transformers/all-MiniLM-L6-v2`, pinned to revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` (384-dim). The backend loads it with `local_files_only=True`, so after provisioning everything runs offline.
 
-- `scripts/provision_model.py` downloads that exact revision into the Hugging Face cache (`~/.cache/huggingface`, or `$HF_HOME`).
+- `scripts/provision_model.py` downloads that exact revision and saves the complete model at `ml_artifacts/semantic_model` (or `PROGRESSSYNC_MODEL_PATH`).
 - On a machine without it, the API returns **503** with the provisioning command, `GET /api/v1/ml/status` reports `semantic_model_available: false`, and `pytest` stops with the same instruction.
 - There is **no** lexical or proxy fallback for the semantic score.
 
@@ -44,8 +81,9 @@ For UI development, run `cd frontend-react; npm run dev` (http://127.0.0.1:5173,
    - pending AUTO_MATCHED events stay listed under **Awaiting confirmation** in the Review queue until someone confirms, rejects or sends them to review.
 
    Nothing is written to the schedule without a human confirmation. `APPROVED` and `REJECTED` are terminal, with exactly one approval per event, including under concurrent confirms. Progress is monotonic: a lower-progress report never reopens or lowers an activity (409, nothing written).
+
 5. **Update**: actuals, audit row, optional delay cause, execution memory, and a before/after **forecast CPM** (project finish movement, critical path entered/left, downstream float, at-risk activities, milestones). The forecast and at-risk flags are also refreshed on startup, and on reads whenever the data date has moved since the last snapshot.
-6. **Time Agent**: a persisted, project-bound session. It asks a data-driven clarification question and continues the *same* event, and it records only after an explicit "yes".
+6. **Time Agent**: a persisted, project-bound session. It asks a data-driven clarification question and continues the _same_ event, and it records only after an explicit "yes".
 7. **Views**: Gantt (planned/actual/critical/at-risk/dependencies), planned-vs-actual variance, productivity, delay causes, and institutional-memory search.
 
 ## Tests and benchmark
@@ -56,6 +94,7 @@ python scripts/run_benchmark.py            # frozen held-out split; --split dev,
 ```
 
 Last recorded held-out run (84 synthetic cases, fusion baseline, final hardening build):
+
 - 0 silent errors (no wrong AUTO matches) and 100% precision on the 21 auto-matched cases;
 - 76.2% top-1 and 92.1% Recall@5;
 - all 13 unknown cases UNMATCHED, 0 cross-project candidates.
@@ -66,11 +105,11 @@ This is a small synthetic benchmark, **not production accuracy**. Details are in
 
 ## Environment variables
 
-| Variable | Effect | Default |
-|---|---|---|
-| `PROGRESSSYNC_DB` | SQLite file path | `data/progresssync.db` |
-| `PROGRESSSYNC_USE_RERANKER` | Enables the legacy logistic-regression reranker. **Not safe**: it produced 6 silent errors on the held-out benchmark (measured 2026-09-26). Leave off; the evaluator build keeps it off. | off |
-| `HF_HOME` | Hugging Face cache used for the model | `~/.cache/huggingface` |
+| Variable                    | Effect                                                                                                                                                                                   | Default                |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| `PROGRESSSYNC_DB`           | SQLite file path                                                                                                                                                                         | `data/progresssync.db` |
+| `PROGRESSSYNC_USE_RERANKER` | Enables the legacy logistic-regression reranker. **Not safe**: it produced 6 silent errors on the held-out benchmark (measured 2026-09-26). Leave off; the evaluator build keeps it off. | off                    |
+| `HF_HOME`                   | Hugging Face cache used for the model                                                                                                                                                    | `~/.cache/huggingface` |
 
 ## Limitations
 

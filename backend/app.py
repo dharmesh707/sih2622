@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import secrets
 import io
 import json
 import math
@@ -21,7 +22,7 @@ from sentence_transformers import SentenceTransformer
 
 import networkx as nx
 import yaml
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -34,6 +35,7 @@ FRONTEND = ROOT / "frontend-react" / "dist"  # the built React UI; FastAPI serve
 DISCIPLINES = {"civil", "piping", "static_equipment", "rotating_equipment", "electrical", "instrumentation", "hse"}
 SEMANTIC_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 SEMANTIC_MODEL_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"  # pinned; provision with scripts/provision_model.py
+SEMANTIC_MODEL_PATH = Path(os.getenv("PROGRESSSYNC_MODEL_PATH", ROOT / "ml_artifacts" / "semantic_model"))
 _semantic_model = None
 _activity_embeddings = {}
 _event_embeddings = {}
@@ -123,14 +125,12 @@ def get_semantic_model():
 
     if _semantic_model is None:
         try:
-            _semantic_model = SentenceTransformer(
-                SEMANTIC_MODEL_NAME,
-                revision=SEMANTIC_MODEL_REVISION,
-                local_files_only=True,
-            )
+            model_source = str(SEMANTIC_MODEL_PATH) if SEMANTIC_MODEL_PATH.exists() else SEMANTIC_MODEL_NAME
+            revision = None if SEMANTIC_MODEL_PATH.exists() else SEMANTIC_MODEL_REVISION
+            _semantic_model = SentenceTransformer(model_source, revision=revision, local_files_only=True)
         except OSError as exc:
             raise SemanticModelMissing(
-                f"Semantic model {SEMANTIC_MODEL_NAME}@{SEMANTIC_MODEL_REVISION[:12]} is not in the local cache. "
+                f"Semantic model {SEMANTIC_MODEL_NAME}@{SEMANTIC_MODEL_REVISION[:12]} is not provisioned at {SEMANTIC_MODEL_PATH}. "
                 "Run once with network access: python scripts/provision_model.py"
             ) from exc
 
@@ -1135,7 +1135,33 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="ProgressSync AI", version="1.2.0", lifespan=lifespan)
 app.mount("/assets", StaticFiles(directory=FRONTEND / "assets", check_dir=False), name="assets")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
+
+def configured_origins() -> list[str]:
+    configured = os.getenv("PROGRESSSYNC_CORS_ORIGINS", "").strip()
+    if configured:
+        return [origin.strip() for origin in configured.split(",") if origin.strip()]
+    return ["http://localhost:8000", "http://127.0.0.1:8000", "http://localhost:5173", "http://127.0.0.1:5173"]
+
+
+@app.middleware("http")
+async def demo_auth(request: Request, call_next):
+    token = os.getenv("PROGRESSSYNC_API_TOKEN", "")
+    protected = request.url.path == "/api/v1" or request.url.path.startswith("/api/v1/")
+    if token and protected and request.method != "OPTIONS":
+        authorization = request.headers.get("authorization", "")
+        scheme, _, presented = authorization.partition(" ")
+        if scheme.lower() != "bearer" or not presented or not secrets.compare_digest(presented, token):
+            return JSONResponse(status_code=401, content={"detail": "Authentication required"}, headers={"WWW-Authenticate": "Bearer"})
+    return await call_next(request)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=configured_origins(),
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"],
+)
 
 
 @app.exception_handler(ScheduleCycle)

@@ -1,12 +1,20 @@
 const NAV_ITEMS = [
-  ['ingest', '01', 'Ingest'],
-  ['review', '02', 'Review queue'],
-  ['schedule', '03', 'Schedule'],
-  ['analytics', '04', 'Analytics'],
-  ['audit', '05', 'Audit + memory'],
+  ["ingest", "01", "Ingest"],
+  ["review", "02", "Review queue"],
+  ["schedule", "03", "Schedule"],
+  ["analytics", "04", "Analytics"],
+  ["audit", "05", "Audit + memory"],
 ];
 
-export default function Layout({ activeView, setActiveView, children, projects = [], projectId, setProjectId }) {
+export default function Layout({
+  activeView,
+  setActiveView,
+  children,
+  projects = [],
+  projectId,
+  setProjectId,
+  onLogout,
+}) {
   return (
     <div className="app-frame">
       <header className="topbar">
@@ -22,12 +30,28 @@ export default function Layout({ activeView, setActiveView, children, projects =
           <span className="status-label">LOCAL PIPELINE</span>
           <span className="divider" />
           <label>
-            PROJECT{' '}
-            <select value={projectId} onChange={(e) => setProjectId(Number(e.target.value))}>
-              {!projects.some((p) => p.id === projectId) && <option value={projectId}>#{projectId}</option>}
-              {projects.map((p) => <option key={p.id} value={p.id}>#{p.id} · {p.name}</option>)}
+            PROJECT{" "}
+            <select
+              value={projectId}
+              onChange={(e) => setProjectId(Number(e.target.value))}
+            >
+              {!projects.some((p) => p.id === projectId) && (
+                <option value={projectId}>#{projectId}</option>
+              )}
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  #{p.id} · {p.name}
+                </option>
+              ))}
             </select>
           </label>
+          <button
+            type="button"
+            className="secondary compact"
+            onClick={onLogout}
+          >
+            Log out
+          </button>
         </div>
       </header>
 
@@ -38,7 +62,7 @@ export default function Layout({ activeView, setActiveView, children, projects =
               <button
                 key={view}
                 type="button"
-                className={`nav ${activeView === view ? 'active' : ''}`}
+                className={`nav ${activeView === view ? "active" : ""}`}
                 onClick={() => setActiveView(view)}
               >
                 <span>{number}</span>
