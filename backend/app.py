@@ -206,6 +206,7 @@ ADDED_COLUMNS = {
     "activities": {"at_risk_reason": "TEXT"},
     "delay_causes": {"project_id": "INTEGER", "activity_id": "INTEGER", "created_at": "TEXT"},
     "schedule_snapshots": {"data_date": "TEXT"},
+    "field_reports": {"client_report_id": "TEXT", "response_json": "TEXT"},
 }
 
 
@@ -218,6 +219,7 @@ def init_db() -> None:
             for column, kind in columns.items():
                 if column not in present:
                     db.execute(f"ALTER TABLE {table} ADD COLUMN {column} {kind}")
+        db.execute("CREATE UNIQUE INDEX IF NOT EXISTS field_reports_client_ref ON field_reports(project_id, client_report_id) WHERE client_report_id IS NOT NULL")
         load_terms(db)
         db.commit()
         if not db.execute("SELECT 1 FROM projects LIMIT 1").fetchone():
@@ -1099,6 +1101,9 @@ class ReportIn(BaseModel):
     text: str = Field(min_length=1, max_length=20000)
     source: str = "text"
     report_date: date | None = None  # the day the report describes; defaults to today
+    # Optional client-generated id: a retried submission (e.g. mobile after a timeout) replays the
+    # original result instead of creating a second event.
+    client_report_id: str | None = Field(default=None, min_length=8, max_length=64, pattern=r"^[A-Za-z0-9_-]+$")
 
     @field_validator("report_date")
     @classmethod
@@ -1211,15 +1216,36 @@ def report(payload: ReportIn):
     with closing(connect()) as db:
         if not db.execute("SELECT 1 FROM projects WHERE id=?", (payload.project_id,)).fetchone():
             raise HTTPException(404, "Project not found")
-        report_id = db.execute("INSERT INTO field_reports(project_id,source,raw_text,submitted_at) VALUES (?,?,?,?)", (payload.project_id, payload.source, payload.text, now())).lastrowid
+        if payload.client_report_id:
+            prior = replayed_report(db, payload)
+            if prior:
+                return prior
+        try:
+            report_id = db.execute("INSERT INTO field_reports(project_id,source,raw_text,submitted_at,client_report_id) VALUES (?,?,?,?,?)", (payload.project_id, payload.source, payload.text, now(), payload.client_report_id)).lastrowid
+        except sqlite3.IntegrityError:
+            return replayed_report(db, payload)
         event = extract_event(payload.text, payload.source, report_id, payload.report_date)
         event_id = db.execute("INSERT INTO execution_events(report_id,event_type,discipline,activity_terms,identifiers,location_terms,quantity,unit,progress,event_timestamp,source_text,source_span,extraction_confidence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", (report_id, event["event_type"], event["discipline"], event["activity_terms"], json.dumps(event["identifiers"]), event["location_terms"], event["quantity"], event["unit"], event["progress"], event["event_timestamp"], event["source_text"], json.dumps(event["source_span"]), event["extraction_confidence"])).lastrowid
         event["id"] = event_id
         match = make_match(db, payload.project_id, event_id, event)
         latency = round((time.perf_counter() - started) * 1000, 2)
-        db.execute("UPDATE field_reports SET latency_ms=?,status=? WHERE id=?", (latency, match["decision"], report_id))
+        result = {"report_id": report_id, "event_id": event_id, "event": event, "match": match, "latency_ms": latency}
+        db.execute("UPDATE field_reports SET latency_ms=?,status=?,response_json=? WHERE id=?", (latency, match["decision"], json.dumps(result) if payload.client_report_id else None, report_id))
         db.commit()
-        return {"report_id": report_id, "event_id": event_id, "event": event, "match": match, "latency_ms": latency}
+        return result
+
+
+def replayed_report(db: sqlite3.Connection, payload: ReportIn) -> dict[str, Any] | None:
+    """The original response for a client_report_id already seen in this project; 409 if the id was
+    reused for different text or the first request is still being processed."""
+    row = db.execute("SELECT raw_text, response_json FROM field_reports WHERE project_id=? AND client_report_id=?", (payload.project_id, payload.client_report_id)).fetchone()
+    if not row:
+        return None
+    if row["raw_text"] != payload.text:
+        raise HTTPException(409, "client_report_id was already used for a different report")
+    if not row["response_json"]:
+        raise HTTPException(409, "This report is still being processed; retry shortly")
+    return {**json.loads(row["response_json"]), "replayed": True}
 
 @app.get("/api/v1/events/{event_id}")
 def event(event_id: int):
