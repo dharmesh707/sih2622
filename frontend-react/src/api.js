@@ -35,6 +35,20 @@ export async function api(path, options = {}) {
   return body;
 }
 
+export async function download(path, filename) {
+  const headers = new Headers();
+  const token = getToken();
+  if (token) headers.set("Authorization", `Bearer ${token}`);
+  const response = await fetch(`/api/v1${path}`, { headers });
+  if (!response.ok) throw new Error(`Request failed (${response.status})`);
+  const blob = await response.blob();
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
 export function jsonOptions(payload) {
   return {
     method: "POST",

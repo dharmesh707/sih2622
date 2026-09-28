@@ -4,6 +4,7 @@ import csv
 import secrets
 import io
 import json
+import logging
 import math
 import os
 import pickle
@@ -18,17 +19,16 @@ from datetime import date, datetime, timedelta, timezone
 from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
-from sentence_transformers import SentenceTransformer
-
 import networkx as nx
 import yaml
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
 ROOT = Path(__file__).resolve().parents[1]
+LOGGER = logging.getLogger(__name__)
 DB_PATH = Path(os.getenv("PROGRESSSYNC_DB", ROOT / "data" / "progresssync.db"))
 TERM_PATH = ROOT / "data" / "terminology_map.v1.yaml"
 FRONTEND = ROOT / "frontend-react" / "dist"  # the built React UI; FastAPI serves it at /
@@ -125,13 +125,19 @@ def get_semantic_model():
 
     if _semantic_model is None:
         try:
+            from sentence_transformers import SentenceTransformer
+
             model_source = str(SEMANTIC_MODEL_PATH) if SEMANTIC_MODEL_PATH.exists() else SEMANTIC_MODEL_NAME
             revision = None if SEMANTIC_MODEL_PATH.exists() else SEMANTIC_MODEL_REVISION
-            _semantic_model = SentenceTransformer(model_source, revision=revision, local_files_only=True)
-        except OSError as exc:
+            if SEMANTIC_MODEL_PATH.exists():
+                _semantic_model = SentenceTransformer(model_source)
+            else:
+                _semantic_model = SentenceTransformer(model_source, revision=revision, local_files_only=True)
+        except Exception as exc:
+            LOGGER.exception("Failed to load semantic model %s from %s", SEMANTIC_MODEL_NAME, SEMANTIC_MODEL_PATH)
             raise SemanticModelMissing(
                 f"Semantic model {SEMANTIC_MODEL_NAME}@{SEMANTIC_MODEL_REVISION[:12]} is not provisioned at {SEMANTIC_MODEL_PATH}. "
-                "Run once with network access: python scripts/provision_model.py"
+                f"Model load error: {type(exc).__name__}: {exc}. Run once with network access: python scripts/provision_model.py"
             ) from exc
 
     return _semantic_model
@@ -1132,6 +1138,10 @@ class AgentIn(BaseModel):
     session_id: str | None = None
 
 
+class ProjectIn(BaseModel):
+    name: str = Field(min_length=1, max_length=200)
+
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     init_db()
@@ -1188,6 +1198,13 @@ def index():
 def projects():
     with closing(connect()) as db:
         return [dict(row) for row in db.execute("SELECT * FROM projects ORDER BY id")]
+
+@app.post("/api/v1/projects")
+def create_project(payload: ProjectIn):
+    with closing(connect()) as db:
+        project_id = db.execute("INSERT INTO projects(name, created_at) VALUES (?, ?)", (payload.name.strip(), now())).lastrowid
+        db.commit()
+        return dict(db.execute("SELECT * FROM projects WHERE id=?", (project_id,)).fetchone())
 
 @app.get("/api/v1/projects/{project_id}/activities")
 def activities(project_id: int):
@@ -1369,10 +1386,15 @@ def ml_status():
     try:
         get_semantic_model()
         semantic_available = True
-    except SemanticModelMissing:
+    except SemanticModelMissing as exc:
         semantic_available = False
+        semantic_error = str(exc)
+    except Exception as exc:
+        LOGGER.exception("Unexpected semantic model status failure")
+        semantic_available = False
+        semantic_error = f"{type(exc).__name__}: {exc}"
 
-    return {
+    response = {
         "semantic_model": SEMANTIC_MODEL_NAME,
         "semantic_model_revision": SEMANTIC_MODEL_REVISION,
         "semantic_model_available": semantic_available,
@@ -1382,6 +1404,9 @@ def ml_status():
         "reranker_auto_threshold": RERANKER_AUTO_THRESHOLD,
         "reranker_margin_threshold": RERANKER_MARGIN_THRESHOLD,
     }
+    if not semantic_available:
+        response["semantic_model_error"] = semantic_error
+    return response
 
 
 def _mean(values: list[Any]) -> float | None:
@@ -1469,6 +1494,16 @@ def audit(project_id: int | None = None):
         return [dict(row) for row in db.execute(
             "SELECT l.*, a.activity_code, a.description FROM audit_log l LEFT JOIN activities a ON a.id=l.activity_id "
             "WHERE (? IS NULL OR l.project_id=?) ORDER BY l.id DESC LIMIT 100", (project_id, project_id))]
+
+@app.get("/api/v1/audit/export")
+def audit_export(project_id: int | None = None):
+    rows = audit(project_id)
+    output = io.StringIO()
+    fields = ["id", "project_id", "activity_id", "event_id", "activity_code", "description", "old_value", "new_value", "source", "evidence", "score", "actor", "approval_status", "created_at"]
+    writer = csv.DictWriter(output, fieldnames=fields, extrasaction="ignore")
+    writer.writeheader()
+    writer.writerows(rows)
+    return StreamingResponse(iter([output.getvalue()]), media_type="text/csv", headers={"Content-Disposition": "attachment; filename=audit.csv"})
 
 @app.get("/api/v1/terminology-map")
 def terminology():
@@ -1616,7 +1651,7 @@ def agent_session(session_id: str, project_id: int | None = None):
         return {**dict(session), "messages": [dict(r) for r in db.execute("SELECT * FROM agent_messages WHERE session_id=? ORDER BY id", (session_id,))]}
 
 @app.post("/api/v1/projects/{project_id}/schedule/import")
-async def import_schedule(project_id: int, file: UploadFile = File(...)):
+async def import_schedule(project_id: int, file: UploadFile = File(...), project_name: str | None = Form(None)):
     content = await file.read()
     if len(content) > 10_000_000: raise HTTPException(413, "File exceeds 10 MB limit")
     name = (file.filename or "").lower()
@@ -1647,7 +1682,9 @@ async def import_schedule(project_id: int, file: UploadFile = File(...)):
     text_of = lambda value: "" if value is None else str(value).strip()
     errors, inserted, links = [], 0, []
     with closing(connect()) as db:
-        db.execute("INSERT OR IGNORE INTO projects(id,name,created_at) VALUES (?,?,?)", (project_id, f"Project {project_id}", now()))
+        db.execute("INSERT OR IGNORE INTO projects(id,name,created_at) VALUES (?,?,?)", (project_id, (project_name or f"Project {project_id}").strip(), now()))
+        if project_name and project_name.strip():
+            db.execute("UPDATE projects SET name=? WHERE id=?", (project_name.strip(), project_id))
         for number, row in enumerate(records, 2):
             item = {key: row[index] if index < len(row) else None for key, index in positions.items()}
             relationship, lag = text_of(item.get("relationship")), item.get("lag")
@@ -1693,4 +1730,5 @@ async def import_schedule(project_id: int, file: UploadFile = File(...)):
             raise HTTPException(409, f"Import rejected, nothing was saved. {exc}")
         db.commit()
         recompute(db, project_id, "schedule import")
-    return {"inserted": inserted, "dependencies_inserted": dependencies_inserted, "errors": errors, "rows": len(records)}
+    dependency_columns_present = dependency_file or "predecessor" in normalized_headers or "predecessors" in normalized_headers
+    return {"inserted": inserted, "dependencies_inserted": dependencies_inserted, "dependency_columns_present": dependency_columns_present, "dependency_warning": None if dependencies_inserted else "No usable predecessor links were imported; critical-path results use activity durations only.", "errors": errors, "rows": len(records)}

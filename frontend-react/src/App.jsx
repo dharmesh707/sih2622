@@ -122,7 +122,7 @@ export default function App() {
   if (!authenticated)
     return <LoginScreen onLogin={() => setAuthenticated(true)} />;
 
-  const shared = { projectId, setError: notify };
+  const shared = { projectId, setProjectId, setError: notify };
 
   return (
     <Layout
